@@ -34,7 +34,7 @@
 			<% 
 				//Scriptlet
 				List<Patient> list = null;
-				list = (List<Patient>) request.getAttribute("list");
+				list = (List<Patient>) request.getAttribute("list1");
 				if(!list.isEmpty() && list != null) {
 					for(Patient p : list) { %>
 						<tr>
@@ -42,8 +42,8 @@
 					      <td><%= p.getFirstName() %></td>
 					      <td><%= p.getLastName() %></td>
 					      <td><%= p.getGender() %></td>
-					      <td><i class="fas fa-edit"></i></td>
-					      <td><i class="fas fa-trash-alt"></i></td>
+					      <td><a href="/ExamJavaEE/patient-controller?action=edit&id=<%=p.getId()%>"><i class="fas fa-edit"></i></a></td>
+					      <td><a href="/ExamJavaEE/patient-controller?action=delete&id=<%=p.getId()%>"><i class="fas fa-trash-alt"></i></a></td>
 					    </tr>
 					<% } 
 				} else { %>

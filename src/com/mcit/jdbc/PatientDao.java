@@ -34,9 +34,11 @@ public class PatientDao {
 	public List<Patient> getAll() {
 		String sql = "SELECT * FROM patient";
 		List<Patient> list = new ArrayList<>();
+		list.clear();
+		PreparedStatement query = null;
 		
 		try {
-			PreparedStatement query = con.prepareStatement(sql);
+			query = con.prepareStatement(sql);
 			ResultSet result = query.executeQuery();
 			list.clear();
 			
@@ -57,4 +59,20 @@ public class PatientDao {
 		
 		return list;
 	}
+	
+	public void delete(int id) {
+		
+		String sql = "DELETE FROM patient WHERE patient_id =" + id;
+
+        try {
+            
+        	PreparedStatement query = con.prepareStatement(sql);
+        	
+        	query.executeUpdate();
+            query.close();
+            System.out.println("Deleted!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

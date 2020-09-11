@@ -27,11 +27,19 @@ public class PatientController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Entrando no doGet() de Patient");
-		request.setAttribute("list", null);
 		List<Patient> list = null;
+		PatientDao patDao = new PatientDao();
+		
+		String action = request.getParameter("action");
+		System.out.println("Action:" +  action);
+		
+		if(action != null && action.equals("delete")) {
+			int id = Integer.parseInt(request.getParameter("id"));
+			System.out.println("Chamando o método de deletar com id " + id);
+			patDao.delete(id);
+		}
 		
 		//1 - Obter lista de pacientes
-		PatientDao patDao = new PatientDao();
 		list = patDao.getAll();
 		
 		for(Patient p : list) {
@@ -42,12 +50,12 @@ public class PatientController extends HttpServlet {
 		}
 		
 		//2 - Engavetar a lista no request
-		request.setAttribute("list", list);
+		request.setAttribute("list1", list);
 		
 		//3 - Encaminhar para o JSP
-		//getServletContext().getRequestDispatcher("/patient.jsp").forward(request, response);
-		RequestDispatcher output = request.getRequestDispatcher("patient-list.jsp");
-		output.forward(request, response);
+		getServletContext().getRequestDispatcher("/patient-list.jsp").forward(request, response);
+		//RequestDispatcher output = request.getRequestDispatcher("patient-list.jsp");
+		//output.forward(request, response);
 	}
 
 
